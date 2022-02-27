@@ -2,8 +2,8 @@ var app = angular.module('app', ['ngRoute', 'ui.bootstrap']);
 
 app
 .factory('Page', function() {
-	let title = 'Rick & Morty';
-	let h1 = 'Rick & Morty';
+	var title = 'Rick & Morty';
+	var h1 = 'Rick & Morty';
 	return {
 		title: function() { return title; },
 		setTitle: function(newTitle) { title = newTitle },
@@ -100,7 +100,7 @@ app
 		feather.replace();
 	});
 
-	let links = [];
+	var links = [];
 	links.push({title : 'Characters', url: '/character', logo : 'user', urlApi: '/character/getAll' });
 	$scope.navs = links;
 
@@ -117,7 +117,7 @@ app
 	$scope.maxSize = 10;
 
 	const getResourceIDFromURL = (resourceType, url) => {
-		let splitted = url.split(resourceType+'/');
+		const splitted = url.split(resourceType+'/');
 		if (splitted.length > 0) {
 			return splitted[1];
 		}
@@ -126,18 +126,6 @@ app
 
 	$scope.toggleEpisodes = function(char) {
 		char.episodesToggled = !char.episodesToggled;
-		/* if (!char.episodesInfo) {
-			let episodesIds = '';
-			char.episode.forEach((episode, i) => {
-				episodesIds += getResourceIDFromURL('episode', episode)+",";
-			})
-			episodesIds = episodesIds.slice(0, -1);
-
-			Resource.getMultiple('/episode/getMultiple', episodesIds, function(episodes) {
-				char.episodesInfo = episodes;
-			});
-			console.log("chars:",$scope.Characters)
-		} */
 	}
 
 	const setCharacters = (chars) => {
@@ -145,46 +133,26 @@ app
 		$scope.CharInfo = chars.info;
 		$scope.numPerPage = chars.results.length;
 
-		let locationsIds = '';
-		$scope.Characters.forEach((char) => {
+		$scope.Characters.forEach((char, i) => {
 			if (char.location.url != "") {
-				locationsIds += getResourceIDFromURL('location', char.location.url)+",";
-			}
-
-			let episodesIds = '';
-			char.episode.forEach((episode) => {
-				episodesIds += getResourceIDFromURL('episode', episode)+",";
-			})
-			episodesIds = episodesIds.slice(0, -1);
-
-			Resource.getMultiple('/episode/getMultiple', episodesIds, function(episodes) {
-				if (episodes.length !== undefined) {
-					char.episodesInfo = episodes;
-				} else {
-					char.episodesInfo = [];
-					char.episodesInfo.push(episodes)
-				}
-			});
-		});
-		locationsIds = locationsIds.slice(0, -1);
-
-		Resource.getMultiple('/location/getMultiple', locationsIds, function(locations) {
-			$scope.Locations = locations;
-			$scope.Characters.forEach((char, i) => {
-				if (char.location.url != "") {
-					Resource.findItemByID($scope.Locations, getResourceIDFromURL('location', char.location.url), function(item) {
-						$scope.Characters[i].location.info = item[0];
-						if ($scope.Characters[i].location.info) {
-							$scope.Characters[i].location.info.resNum = $scope.Characters[i].location.info.residents.length;
-						} else {
-							$scope.Characters[i].location.info.resNum = 0;
-						}
+				Resource.findItemByID($scope.Locations, getResourceIDFromURL('location', char.location.url), function(item) {
+					$scope.Characters[i].location.info = item[0];
+					if ($scope.Characters[i].location.info) {
+						$scope.Characters[i].location.info.resNum = $scope.Characters[i].location.info.residents.length;
+					} else {
+						$scope.Characters[i].location.info.resNum = 0;
+					}
+				})
+			} 
+			if (char.episode.length > 0) {
+				char.episodeInfo = [];
+				char.episode.forEach((episode, i) => {
+					Resource.findItemByID($scope.Episodes, getResourceIDFromURL('episode', episode), function(item) {
+						char.episodeInfo.push(item[0]);
 					})
-				}
-			})
+				})
+			}
 		})
-
-		console.log("chars:",$scope.Characters)
 	}
 
 	$scope.pageChanged = function(page) {
@@ -199,11 +167,49 @@ app
 		})
 		if (cb) cb();
 	}
+
+	/* function loadAllPages(numPages, urlApi, array){
+		if (numPages > 1) {
+			for (var i = 2; i <= numPages; i++) {
+				Resource.getPage(urlApi, i, function(objOut) {
+					populateArray(array, objOut.results, function() {
+						
+					});
+				})
+			}
+		}
+	} */
+
+	function loadAllPages(numPages, urlApi, array, page, cb){
+		if (numPages > 1) {
+			Resource.getPage(urlApi, page, function(objOut) {
+				populateArray(array, objOut.results, function() {
+					if (page < numPages) {
+						loadAllPages(numPages, urlApi, array, ++page, cb);
+					} else {
+						if(cb) cb();
+					}
+				});
+			})
+		}
+	}
 	
 	const init = () => {
-		Resource.getAll('/character/getAll', function(characters) {
-			setCharacters(characters);
-		});
+		Resource.getAll('location/getAll', function(locations) {
+			const numPages = locations.info.pages;
+			populateArray($scope.Locations, locations.results);
+			loadAllPages(numPages, 'location/getPage', $scope.Locations, 2, function() {
+				Resource.getAll('episode/getAll', function(episodes) {
+					const numPages = episodes.info.pages;
+					populateArray($scope.Episodes, episodes.results);
+					loadAllPages(numPages, 'episode/getPage', $scope.Episodes, 2, function() {
+						Resource.getAll('/character/getAll', function(characters) {
+							setCharacters(characters)
+						});
+					});
+				})
+			});
+		})
 	}
 
 	init();
