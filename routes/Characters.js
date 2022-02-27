@@ -2,8 +2,6 @@ const https = require('https');
 const express = require("express");
 const router = express.Router();
 
-const get = require('../utils/get');
-
 router.get('/getAll', function (req, res) {
 	const options = {
 		method: 'GET',

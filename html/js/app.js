@@ -71,18 +71,6 @@ app
 		}
 	}
 })
-.directive('onFinishRender', function ($timeout) {
-	return {
-		restrict: 'A',
-		link: function (scope, element, attr) {
-			if (scope.$last === true) {
-				$timeout(function () {
-					scope.$emit('ngRepeatFinished');
-				});
-			}
-		}
-	}
-})
 .config( function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/characters', {
@@ -98,7 +86,7 @@ app
 
 	$location.path('/characters')
 })
-.controller('CharactersCtrl', function($rootScope, $scope, $http, $routeParams, $timeout, Page, Resource) {
+.controller('CharactersCtrl', function($scope, Page, Resource) {
 	Page.seth1('Characters')
 	$scope.Page = Page;
 

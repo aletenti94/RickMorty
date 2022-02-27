@@ -1,12 +1,12 @@
 <pagination ng-if="Characters" num-pages="CharInfo.pages" current-page="currentPage" max-size="maxSize" boundary-links="true" on-select-page="pageChanged(page)"></pagination>
 <div class="d-flex flex-wrap">
-    <div class="card-container col-md-12 col-lg-6" ng-repeat="char in Characters" ng-if="Characters">
+    <div class="card-container col-md-12 col-lg-4" ng-repeat="char in Characters" ng-if="Characters">
       <div class="card char-card">
         <div class="row no-gutters">
-          <div class="col-sm-4">
+          <div class="col-sm-5">
             <img class="card-img" ng-src="{{char.image}}">
           </div>
-          <div class="col-sm-8">
+          <div class="col-sm-7">
             <div class="card-body">
               <h5 class="card-title" href="">{{char.name}}</h5>
               <p class="card-text"><span class="{{char.status=='Alive'?'green-text':(char.status=='Dead'?'red-text':'normal-text')}}">{{char.status}}</span> - {{char.gender}}</p>
