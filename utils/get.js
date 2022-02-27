@@ -1,11 +1,10 @@
 const https = require('https');
 
-export const get = (opt, res) => {
+module.exports.get = function(path, cb) {
     const options = {
 		method: 'GET',
-		host: opt.host,
-		path: opt.path,
-		params: opt.params,
+		host: 'rickandmortyapi.com',
+		path: path,
 		json: true
 	}
 	
@@ -17,7 +16,7 @@ export const get = (opt, res) => {
 		});
 
 		response.on('end', function() {
-            res(JSON.parse(retData));
+            cb(retData);
 		})
 	}).end();
 }

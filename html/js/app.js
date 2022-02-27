@@ -85,7 +85,7 @@ app
 })
 .config( function ($routeProvider, $locationProvider) {
 	$routeProvider
-		.when('/character', {
+		.when('/characters', {
 			controller: 'CharactersCtrl',
 			templateUrl: 'html/views/characters.html'
 		})
@@ -95,23 +95,12 @@ app
 })
 .controller('MainCtrl', function($rootScope, $scope, $location, Page) {
 	$scope.Page = Page;
-	
-	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-		feather.replace();
-	});
 
-	let links = [];
-	links.push({title : 'Characters', url: '/character', logo : 'user', urlApi: '/character/getAll' });
-	$scope.navs = links;
-
-	$location.path('/character')
+	$location.path('/characters')
 })
 .controller('CharactersCtrl', function($rootScope, $scope, $http, $routeParams, $timeout, Page, Resource) {
 	Page.seth1('Characters')
 	$scope.Page = Page;
-	$scope.Characters = [];
-	$scope.Locations = [];
-	$scope.Episodes = [];
 
 	$scope.currentPage = 1;
 	$scope.maxSize = 10;
@@ -126,18 +115,6 @@ app
 
 	$scope.toggleEpisodes = function(char) {
 		char.episodesToggled = !char.episodesToggled;
-		/* if (!char.episodesInfo) {
-			let episodesIds = '';
-			char.episode.forEach((episode, i) => {
-				episodesIds += getResourceIDFromURL('episode', episode)+",";
-			})
-			episodesIds = episodesIds.slice(0, -1);
-
-			Resource.getMultiple('/episode/getMultiple', episodesIds, function(episodes) {
-				char.episodesInfo = episodes;
-			});
-			console.log("chars:",$scope.Characters)
-		} */
 	}
 
 	const setCharacters = (chars) => {
@@ -183,21 +160,12 @@ app
 				}
 			})
 		})
-
-		console.log("chars:",$scope.Characters)
 	}
 
 	$scope.pageChanged = function(page) {
 		Resource.getPage('/character/getPage', page, function(objOut) {
 			setCharacters(objOut)
 		});
-	}
-
-	const populateArray = (array, objIn, cb) => {
-		objIn.forEach((item) => {
-			array.push(item);
-		})
-		if (cb) cb();
 	}
 	
 	const init = () => {
@@ -208,10 +176,3 @@ app
 
 	init();
 })
-
-
-
-
-
-
-

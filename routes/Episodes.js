@@ -5,10 +5,8 @@ const router = express.Router();
 router.get('/getAll', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: 'rickandmortyapi.com',
-		path: '/api/episode',
-		json: true,
-		params: {}
+		host: process.env.HOST,
+		path: '/api/episode'
 	}
 	
 	https.request(options, function(response) {
@@ -27,9 +25,8 @@ router.get('/getAll', function (req, res) {
 router.get('/getPage', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: 'rickandmortyapi.com',
-		path: `/api/episode?page=${req.query.page}`,
-		json: true
+		host: process.env.HOST,
+		path: `/api/episode?page=${req.query.page}`
 	}
 	
 	https.request(options, function(response) {
@@ -48,9 +45,8 @@ router.get('/getPage', function (req, res) {
 router.get('/getMultiple', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: 'rickandmortyapi.com',
-		path: `/api/episode/${req.query.list}`,
-		json: true
+		host: process.env.HOST,
+		path: `/api/episode/${req.query.list}`
 	}
 	
 	https.request(options, function(response) {

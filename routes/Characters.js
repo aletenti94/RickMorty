@@ -2,15 +2,15 @@ const https = require('https');
 const express = require("express");
 const router = express.Router();
 
-//const get = require('../utils/get');
+require('dotenv').config()
+
+const get = require('../utils/get');
 
 router.get('/getAll', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: 'rickandmortyapi.com',
-		path: '/api/character',
-		json: true,
-		params: {}
+		host: process.env.HOST,
+		path: '/api/character'
 	}
 	
 	https.request(options, function(response) {
@@ -29,9 +29,8 @@ router.get('/getAll', function (req, res) {
 router.get('/getPage', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: 'rickandmortyapi.com',
+		host: process.env.HOST,
 		path: `/api/character?page=${req.query.page}`,
-		json: true
 	}
 	
 	https.request(options, function(response) {
