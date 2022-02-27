@@ -1,42 +1,26 @@
-import express from 'express';
-
-require('dotenv').config({ path: 'settings.env' });
-
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
-import { createServer } from 'http';
+const path = require("path");
 
-//carico file di routing
-import routes from './routes/index';
+const charactersRoutes = require("./routes/Characters");
+const locationsRoutes = require("./routes/Locations");
+const episodesRoutes = require("./routes/Episodes");
 
-const port = process.env.PORT || '3000';
-app.set('port', port);
+app.use(bodyParser.json());
 
-//inizializzo route handling
-app.use('/', routes)
+app.use('/character', charactersRoutes);
+app.use('/location', locationsRoutes);
+app.use('/episode', episodesRoutes);
 
-const server = createServer(app);
+app.use('/', express.static(__dirname));
 
-server.listen(port);
-server.on('error', onError)
-server.on('listening', onListening)
+app.get('/', function (req, res) {
+	res.sendFile(path.join(__dirname+'/index.html'));
+});
 
-function onError (error) {
-    const bind = 'Port ' + port;
+app.route('/*').get(function(req, res) { 
+    return res.sendFile(path.join(__dirname, 'index.html')); 
+});
 
-    switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-        default:
-            throw error
-    }      
-}
-
-function onListening () {
-    const addr = server.address();
-    const url = `http://localhost:${addr.port}`;
-    console.log(`Listening on ${url}`);
-}
+module.exports = app;

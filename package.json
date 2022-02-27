@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/aletenti94/RickMorty#readme",
   "dependencies": {
+    "angular-resource": "^1.8.2",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "http": "^0.0.1-security"
+    "http": "^0.0.1-security",
+    "route": "^0.2.5"
   }
 }

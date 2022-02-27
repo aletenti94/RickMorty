@@ -1,0 +1,49 @@
+<pagination ng-if="Characters" num-pages="CharInfo.pages" current-page="currentPage" max-size="maxSize" boundary-links="true" on-select-page="pageChanged(page)"></pagination>
+<div class="d-flex flex-wrap">
+    <div class="card-container col-md-12 col-lg-6" ng-repeat="char in Characters" ng-if="Characters">
+      <div class="card char-card">
+        <div class="row no-gutters">
+          <div class="col-sm-4">
+            <img class="card-img" ng-src="{{char.image}}">
+          </div>
+          <div class="col-sm-8">
+            <div class="card-body">
+              <h5 class="card-title" href="">{{char.name}}</h5>
+              <p class="card-text"><span class="{{char.status=='Alive'?'green-text':(char.status=='Dead'?'red-text':'normal-text')}}">{{char.status}}</span> - {{char.gender}}</p>
+              <p class="card-text">{{char.species}} <span ng-show="char.type!=''">- {{char.type}}</span></p>
+              <p class="card-subtitle">
+                Origin: <span class="card-text">{{char.origin.name}}</span>
+              </p>
+              <p class="card-subtitle">
+                Location: <span class="card-text">{{char.location.info?char.location.info.name:'-'}}</span>
+                <p class="card-text" ng-show="char.location.info">{{char.location.info.type}} - {{char.location.info.dimension}}</p>
+                <p class="card-text" ng-show="char.location.info">{{char.location.info.resNum}} resident{{char.location.info.resNum>1?'s':''}} </p>
+              </p>
+              <p class="card-subtitle">
+                Episodes ({{char.episodeInfo.length}}) <a class="plus-button" ng-click="toggleEpisodes(char)">{{char.episodesToggled?'-':'+'}}</a>
+                <p class="card-text" ng-repeat="ep in char.episodeInfo track by $index" ng-if="char.episodesToggled">{{ep.episode}} - {{ep.name}}</p>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="modalEpisodes" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Episodes list</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p ng-repeat="ep in selectedChar.episodeInfo" style="font-size: 8px" ng-show="selectedChar.episode.length > 0">{{ep.name}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div> -->
+</div>
