@@ -7,7 +7,7 @@ const get = require('../utils/get');
 router.get('/getAll', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: process.env.HOST,
+		host: 'rickandmortyapi.com',
 		path: '/api/character'
 	}
 	
