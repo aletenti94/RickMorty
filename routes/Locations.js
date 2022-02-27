@@ -5,8 +5,9 @@ const router = express.Router();
 router.get('/getAll', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: process.env.HOST,
-		path: '/api/location'
+		host: 'rickandmortyapi.com',
+		path: '/api/location',
+		json: true
 	}
 	
 	https.request(options, function(response) {
@@ -25,8 +26,9 @@ router.get('/getAll', function (req, res) {
 router.get('/getPage', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: process.env.HOST,
-		path: `/api/location?page=${req.query.page}`
+		host: 'rickandmortyapi.com',
+		path: `/api/location?page=${req.query.page}`,
+		json: true
 	}
 	
 	https.request(options, function(response) {
@@ -45,8 +47,9 @@ router.get('/getPage', function (req, res) {
 router.get('/getSingle', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: process.env.HOST,
-		path: `/api/location/${req.query.id}`
+		host: 'rickandmortyapi.com',
+		path: `/api/location/${req.query.id}`,
+		json: true
 	}
 	
 	https.request(options, function(response) {
@@ -65,8 +68,9 @@ router.get('/getSingle', function (req, res) {
 router.get('/getMultiple', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: process.env.HOST,
-		path: `/api/location/${req.query.list}`
+		host: 'rickandmortyapi.com',
+		path: `/api/location/${req.query.list}`,
+		json: true
 	}
 	
 	https.request(options, function(response) {

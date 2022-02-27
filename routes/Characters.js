@@ -2,8 +2,6 @@ const https = require('https');
 const express = require("express");
 const router = express.Router();
 
-require('dotenv').config()
-
 const get = require('../utils/get');
 
 router.get('/getAll', function (req, res) {
@@ -29,8 +27,9 @@ router.get('/getAll', function (req, res) {
 router.get('/getPage', function (req, res) {
 	const options = {
 		method: 'GET',
-		host: process.env.HOST,
+		host: 'rickandmortyapi.com',
 		path: `/api/character?page=${req.query.page}`,
+		json: true
 	}
 	
 	https.request(options, function(response) {
