@@ -1,6 +1,6 @@
 # Rick & Morty - Cloud Academy Front End assignment
 
-Simple NodeJS/AngularJS application that show the list of characters from the popular Rick & Morty series.
+Simple NodeJS/AngularJS application that shows the list of characters from the popular Rick & Morty series.
 All information comes from APIs provided by [Rick & Morty API](https://rickandmortyapi.com/) website.
 
 ## Table of Contents
@@ -60,7 +60,7 @@ RickMorty
 
 ## Simple application guide
 
-The main page loads with the first page of characters with all the related information (name, gender, type, origin, location, list of episodes, etc.)
+The main page loads the first page of characters with all the related information (name, gender, type, origin, location, list of episodes, etc.)
 The user can change page by using the pagination tool which provides a simple page navigation.
 List of episodes is available by clicking on the "+" button.
 
