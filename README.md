@@ -10,7 +10,7 @@ All information comes from APIs provided by [Rick & Morty API](https://rickandmo
 * [Installation](#installation)
 * [Basic usage](#basic-usage)
 * [What's included](#whats-included)
-* [Documentation](#documentation)
+* [Simple application guide](#simple-application-guide)
 * [Creators](#creators)
 
 ## Versions
@@ -52,16 +52,17 @@ RickMorty
 │       └── app.js      # AngularJS main file containing routing, factories, controllers, etc.
 │
 ├── routes/             # routes config
-├── handlers/           # handlers
 ├── app.js     
 ├── server.js     
 ├── index.html          # home page
 └── package.json
 ```
 
-## Documentation
+## Simple application guide
 
-The documentation for the CoreUI Admin Template is hosted at our website [CoreUI for Vue](https://coreui.io/vue/)
+The main page loads with the first page of characters with all the related information (name, gender, type, origin, location, list of episodes, etc.)
+The user can change page by using the pagination tool which provides a simple page navigation.
+List of episodes is available by clicking on the "+" button.
 
 ## Creators
 

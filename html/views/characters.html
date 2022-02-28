@@ -1,11 +1,20 @@
+<!-- pagination section -->
 <pagination ng-if="Characters" num-pages="CharInfo.pages" current-page="currentPage" max-size="maxSize" boundary-links="true" on-select-page="pageChanged(page)"></pagination>
+
 <div class="d-flex flex-wrap">
+    <!-- characters repeater -->
     <div class="card-container col-md-12 col-lg-4" ng-repeat="char in Characters" ng-if="Characters">
+
+      <!-- single character card -->
       <div class="card char-card">
         <div class="row no-gutters">
+
+          <!-- image section-->
           <div class="col-sm-5">
             <img class="card-img" ng-src="{{char.image}}">
           </div>
+
+          <!-- info section -->
           <div class="col-sm-7">
             <div class="card-body">
               <h5 class="card-title" href="">{{char.name}}</h5>
@@ -21,6 +30,8 @@
               </p>
               <p class="card-subtitle">
                 Episodes ({{char.episode.length}}) <a class="plus-button" ng-click="toggleEpisodes(char)">{{char.episodesToggled?'-':'+'}}</a>
+
+                <!-- hidden section with list of episodes, shown by switching "+" & "-" button -->
                 <p class="card-text" ng-repeat="ep in char.episodesInfo track by $index" ng-show="char.episodesInfo && char.episodesToggled">{{ep.episode}} - {{ep.name}}</p>
               </p>
             </div>

@@ -1,7 +1,17 @@
+/**
+ * external modules import
+ */
 const https = require('https');
 const express = require("express");
+
+/**
+ * router init
+ */
 const router = express.Router();
 
+/**
+ * get locations
+ */
 router.get('/getAll', function (req, res) {
 	const options = {
 		method: 'GET',
@@ -23,6 +33,9 @@ router.get('/getAll', function (req, res) {
 	}).end();
 })
 
+/**
+ * get page of locations
+ */
 router.get('/getPage', function (req, res) {
 	const options = {
 		method: 'GET',
@@ -44,6 +57,9 @@ router.get('/getPage', function (req, res) {
 	}).end();
 })
 
+/**
+ * get single location
+ */
 router.get('/getSingle', function (req, res) {
 	const options = {
 		method: 'GET',
@@ -65,6 +81,9 @@ router.get('/getSingle', function (req, res) {
 	}).end();
 })
 
+/**
+ * get multiple locations
+ */
 router.get('/getMultiple', function (req, res) {
 	const options = {
 		method: 'GET',

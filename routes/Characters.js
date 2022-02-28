@@ -1,7 +1,17 @@
+/**
+ * external modules import
+ */
 const https = require('https');
 const express = require("express");
+
+/**
+ * router init
+ */
 const router = express.Router();
 
+/**
+ * get characters
+ */
 router.get('/getAll', function (req, res) {
 	const options = {
 		method: 'GET',
@@ -22,6 +32,9 @@ router.get('/getAll', function (req, res) {
 	}).end();
 })
 
+/**
+ * get page of characters
+ */
 router.get('/getPage', function (req, res) {
 	const options = {
 		method: 'GET',
@@ -43,4 +56,7 @@ router.get('/getPage', function (req, res) {
 	}).end();
 })
 
+/**
+ * 
+ */
 module.exports = router;

@@ -1,7 +1,17 @@
+/**
+ * external modules import
+ */
 const https = require('https');
 const express = require("express");
+
+/**
+ * router init
+ */
 const router = express.Router();
 
+/**
+ * get episodes
+ */
 router.get('/getAll', function (req, res) {
 	const options = {
 		method: 'GET',
@@ -23,6 +33,9 @@ router.get('/getAll', function (req, res) {
 	}).end();
 })
 
+/**
+ * get page of episodes
+ */
 router.get('/getPage', function (req, res) {
 	const options = {
 		method: 'GET',
@@ -44,6 +57,9 @@ router.get('/getPage', function (req, res) {
 	}).end();
 })
 
+/**
+ * get multiple episodes 
+ */
 router.get('/getMultiple', function (req, res) {
 	const options = {
 		method: 'GET',
